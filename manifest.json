@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Chrome Extension Boilerplate",
+  "description": "A modern Chrome extension boilerplate with React 19, TypeScript, Vite, and TailwindCSS",
+  "version": "1.0.0",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "src/assets/icon16.png",
+      "32": "src/assets/icon32.png"
+    }
+  },
+  "icons": {
+    "16": "src/assets/icon16.png",
+    "32": "src/assets/icon32.png"
+  },
+  "background": {
+    "service_worker": "src/background.ts",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["src/content.ts"]
+    }
+  ]
+}
