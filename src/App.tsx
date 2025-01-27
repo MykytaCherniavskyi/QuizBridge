@@ -1,57 +1,28 @@
-import { useState } from 'react';
-import reactLogo from '@/assets/react.svg';
-import viteLogo from '@/assets/vite.svg';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import { HashRouter, Routes, Route, Link } from 'react-router-dom';
+import { TodoList } from '@/components/TodoList';
+import { PokemonPage } from '@/components/PokemonPage';
 import { Button } from '@/components/ui/button';
-import '@/App.css';
 
-function App() {
-  const [count, setCount] = useState(0);
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <HashRouter>
+      <div className="min-h-screen bg-background text-foreground">
+        <nav className="border-b p-4">
+          <div className="mx-auto flex max-w-md gap-4">
+            <Link to="/">
+              <Button variant="ghost">Todo List</Button>
+            </Link>
+            <Link to="/pokemon">
+              <Button variant="ghost">Pokemon</Button>
+            </Link>
+          </div>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<TodoList />} />
+          <Route path="/pokemon" element={<PokemonPage />} />
+        </Routes>
       </div>
-      <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Is it accessible?</AccordionTrigger>
-          <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-2">
-          <AccordionTrigger>Is it styled?</AccordionTrigger>
-          <AccordionContent>
-            Yes. It comes with default styles that matches the other components&apos; aesthetic.
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-3">
-          <AccordionTrigger>Is it animated?</AccordionTrigger>
-          <AccordionContent>
-            Yes. It's animated by default, but you can disable it if you prefer.
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-      <h1>Vite + React</h1>
-      <Button>Click me</Button>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    </HashRouter>
   );
 }
-
-export default App;
