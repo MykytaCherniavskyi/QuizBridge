@@ -3,7 +3,7 @@
   "name": "Chrome Extension Boilerplate",
   "description": "A modern Chrome extension boilerplate with React 19, TypeScript, Vite, and TailwindCSS",
   "version": "1.0.0",
-  "permissions": ["storage", "activeTab"],
+  "permissions": ["storage", "activeTab", "contextMenus"],
   "host_permissions": ["http://*/*", "https://*/*"],
   "action": {
     "default_popup": "index.html",

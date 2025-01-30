@@ -92,7 +92,12 @@ export function WordsListPage() {
 
       <div className="my-2 flex items-center gap-2">
         <ComboboxWithSets onSelect={handleSetSelect} placeholder="Select a Quizlet set" />
-        <Button onClick={handleQuizletSync}>Quizlet Sync</Button>
+        <Button
+          className="bg-quizlet-primary hover:bg-quizlet-primaryHover"
+          onClick={handleQuizletSync}
+        >
+          Quizlet Sync
+        </Button>
       </div>
 
       <div className="my-2 flex items-center gap-2">
