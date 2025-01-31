@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Chrome Extension Boilerplate",
-  "description": "A modern Chrome extension boilerplate with React 19, TypeScript, Vite, and TailwindCSS",
+  "name": "QuizBridge",
+  "description": "Bridge your vocabulary lists to Quizlet flashcards seamlessly",
   "version": "1.0.0",
   "permissions": ["storage", "activeTab", "contextMenus", "tabs", "unlimitedStorage"],
   "host_permissions": ["http://*/*", "https://*/*"],
