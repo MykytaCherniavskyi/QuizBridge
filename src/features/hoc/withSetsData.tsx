@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 import { useAppSelector } from '@/app/hooks';
-import { QuizletSet } from '@/state/sets.slice';
+import { QuizletSet } from '@/types/sets.types';
 import {
   selectSets,
   selectSetsInitialized,
@@ -9,7 +9,7 @@ import {
 } from '@/state/selectors/sets.selector';
 
 interface WithSetsDataProps {
-  sets: {
+  options: {
     value: string;
     label: string;
   }[];
@@ -26,7 +26,7 @@ export function withSetsData<P extends WithSetsDataProps>(WrappedComponent: Comp
     return (
       <WrappedComponent
         {...(props as P)}
-        sets={formattedSets}
+        options={formattedSets}
         isLoading={!isInitialized}
         selectedSet={selectedSet}
       />

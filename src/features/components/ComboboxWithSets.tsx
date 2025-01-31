@@ -1,28 +1,16 @@
-import { CustomCombobox } from './CustomCombobox';
-import { withSetsData } from '../hoc/withSetsData';
-import { QuizletSet } from '@/state/sets.slice';
-
-interface ComboboxWithSetsProps {
-  sets: {
-    value: string;
-    label: string;
-  }[];
-  isLoading: boolean;
-  selectedSet: QuizletSet | null;
-  onSelect: (value: string) => void;
-  placeholder?: string;
-}
+import { CustomCombobox, CustomComboboxProps } from './CustomCombobox';
+import { withSetsData } from '@/features/hoc/withSetsData';
 
 function BaseComboboxWithSets({
-  sets,
+  options,
   isLoading,
   onSelect,
   selectedSet,
   placeholder = 'Select a set...',
-}: ComboboxWithSetsProps) {
+}: CustomComboboxProps) {
   return (
     <CustomCombobox
-      options={sets}
+      options={options}
       isLoading={isLoading}
       onSelect={onSelect}
       placeholder={placeholder}

@@ -1,17 +1,6 @@
 import { storage } from '@/app/storage';
+import { Word, WordsState } from '@/types/words.types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface Word {
-  id: string;
-  text: string;
-  definition: string;
-  selected: boolean;
-}
-
-interface WordsState {
-  words: Word[];
-  isInitialized: boolean;
-}
 
 const initialState: WordsState = {
   words: [],

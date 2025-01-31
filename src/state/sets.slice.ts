@@ -1,18 +1,6 @@
 import { storage } from '@/app/storage';
+import { QuizletSet, SetsState } from '@/types/sets.types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export interface QuizletSet {
-  id: string;
-  url: string;
-  description: string;
-  selected: boolean;
-}
-
-interface SetsState {
-  sets: QuizletSet[];
-  selectedSet: QuizletSet | null;
-  isInitialized: boolean;
-}
 
 const initialState: SetsState = {
   sets: [],

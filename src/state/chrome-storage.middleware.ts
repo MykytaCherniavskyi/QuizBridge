@@ -1,20 +1,9 @@
 import { storage } from '@/app/storage';
+import { QuizletSet } from '@/types/sets.types';
+import { Word } from '@/types/words.types';
 import { Middleware } from '@reduxjs/toolkit';
 import { initializeSets, setSelectedSet, setSets } from './sets.slice';
 import { initializeWords, setWords } from './words.slice';
-
-interface Word {
-  id: string;
-  text: string;
-  selected: boolean;
-}
-
-interface QuizletSet {
-  id: string;
-  url: string;
-  description: string;
-  selected: boolean;
-}
 
 function convertToArray<T>(obj: unknown): T[] {
   if (Array.isArray(obj)) {
@@ -47,14 +36,9 @@ function isValidSet(item: unknown): item is QuizletSet {
   );
 }
 
-function isValidWordArray(data: unknown): data is Word[] {
+function isValidArray(data: unknown, isValidItem: (item: unknown) => boolean): data is (Word[] | QuizletSet[]) {
   const array = convertToArray<unknown>(data);
-  return array.every(isValidWord);
-}
-
-function isValidSetArray(data: unknown): data is QuizletSet[] {
-  const array = convertToArray<unknown>(data);
-  return array.every(isValidSet);
+  return array.every(isValidItem);
 }
 
 export const chromeStorageMiddleware: Middleware = (store) => {
@@ -62,7 +46,7 @@ export const chromeStorageMiddleware: Middleware = (store) => {
   storage.local.get(['words', 'sets', 'selectedSet']).then((result) => {
     // Handle words
     const wordsArray = convertToArray<Word>(result.words);
-    if (wordsArray.length > 0 && isValidWordArray(wordsArray)) {
+    if (wordsArray.length > 0 && isValidArray(wordsArray, isValidWord)) {
       store.dispatch(setWords(wordsArray));
     } else {
       store.dispatch(initializeWords());
@@ -70,7 +54,7 @@ export const chromeStorageMiddleware: Middleware = (store) => {
 
     // Handle sets
     const setsArray = convertToArray<QuizletSet>(result.sets);
-    if (setsArray.length > 0 && isValidSetArray(setsArray)) {
+    if (setsArray.length > 0 && isValidArray(setsArray, isValidSet)) {
       store.dispatch(setSets(setsArray));
     } else {
       store.dispatch(initializeSets());
@@ -88,13 +72,13 @@ export const chromeStorageMiddleware: Middleware = (store) => {
     chrome.storage.onChanged.addListener((changes) => {
       if (changes.words) {
         const wordsArray = convertToArray<Word>(changes.words.newValue);
-        if (isValidWordArray(wordsArray)) {
+        if (isValidArray(wordsArray, isValidWord)) {
           store.dispatch(setWords(wordsArray));
         }
       }
       if (changes.sets) {
         const setsArray = convertToArray<QuizletSet>(changes.sets.newValue);
-        if (isValidSetArray(setsArray)) {
+        if (isValidArray(setsArray, isValidSet)) {
           store.dispatch(setSets(setsArray));
         }
       }

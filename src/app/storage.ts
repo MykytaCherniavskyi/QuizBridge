@@ -1,11 +1,11 @@
 interface StorageArea {
-  get(keys: string[]): Promise<{ [key: string]: any }>;
-  set(items: { [key: string]: any }): Promise<void>;
+  get(keys: string[]): Promise<{ [key: string]: unknown }>;
+  set(items: { [key: string]: unknown }): Promise<void>;
 }
 
 class LocalStorageArea implements StorageArea {
-  async get(keys: string[]): Promise<{ [key: string]: any }> {
-    const result: { [key: string]: any } = {};
+  async get(keys: string[]): Promise<{ [key: string]: unknown }> {
+    const result: { [key: string]: unknown } = {};
     keys.forEach((key) => {
       const item = localStorage.getItem(key);
       if (item) {
@@ -15,7 +15,7 @@ class LocalStorageArea implements StorageArea {
     return result;
   }
 
-  async set(items: { [key: string]: any }): Promise<void> {
+  async set(items: { [key: string]: unknown }): Promise<void> {
     Object.entries(items).forEach(([key, value]) => {
       localStorage.setItem(key, JSON.stringify(value));
     });
@@ -23,7 +23,7 @@ class LocalStorageArea implements StorageArea {
 }
 
 class ChromeStorageArea implements StorageArea {
-  async get(keys: string[]): Promise<{ [key: string]: any }> {
+  async get(keys: string[]): Promise<{ [key: string]: unknown }> {
     return new Promise((resolve) => {
       chrome.storage.local.get(keys, (result) => {
         resolve(result);
@@ -31,7 +31,7 @@ class ChromeStorageArea implements StorageArea {
     });
   }
 
-  async set(items: { [key: string]: any }): Promise<void> {
+  async set(items: { [key: string]: unknown }): Promise<void> {
     return new Promise((resolve) => {
       chrome.storage.local.set(items, () => {
         resolve();
