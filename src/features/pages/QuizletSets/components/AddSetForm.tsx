@@ -29,7 +29,7 @@ export function AddSetForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-4 space-y-2">
+    <form onSubmit={handleSubmit} className="mb-2 space-y-2">
       <Input
         type="url"
         value={newUrl}

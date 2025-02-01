@@ -80,4 +80,9 @@
   .no-transition * {
     transition: none !important;
   }
+
+  html,
+  body {
+    overflow: hidden;
+  }
 }

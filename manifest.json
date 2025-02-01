@@ -9,14 +9,20 @@
     "default_popup": "index.html",
     "default_icon": {
       "16": "src/assets/icon16.png",
-      "32": "src/assets/icon32.png"
+      "32": "src/assets/icon32.png",
+      "96": "src/assets/icon96.png",
+      "128": "src/assets/icon128.png",
+      "144": "src/assets/icon144.png"
     },
     "default_width": 400,
     "default_height": 600
   },
   "icons": {
     "16": "src/assets/icon16.png",
-    "32": "src/assets/icon32.png"
+    "32": "src/assets/icon32.png",
+    "96": "src/assets/icon96.png",
+    "128": "src/assets/icon128.png",
+    "144": "src/assets/icon144.png"
   },
   "background": {
     "service_worker": "src/background.ts",
@@ -24,7 +30,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
+      "matches": ["https://quizlet.com/*/edit"],
       "js": ["src/content.ts"]
     }
   ]

@@ -21,7 +21,7 @@ export function SetsList({ sets }: SetsListProps) {
   };
 
   return (
-    <div className="max-h-96 space-y-2 overflow-y-auto">
+    <div className="max-h-[20rem] space-y-2 overflow-y-auto">
       {sets.map((set) => (
         <Card key={set.id} className="p-4">
           <div className="flex items-center gap-2">
