@@ -11,14 +11,15 @@ export default {
       },
       colors: {
         quizlet: {
-          primary: '#4255ff',
-          primaryHover: '#423ed8',
+          primary: 'hsl(var(--quizlet-primary))',
+          primaryHover: 'hsl(var(--quizlet-primary-hover))',
         },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
+          border: 'hsl(var(--card-border))',
         },
         popover: {
           DEFAULT: 'hsl(var(--popover))',

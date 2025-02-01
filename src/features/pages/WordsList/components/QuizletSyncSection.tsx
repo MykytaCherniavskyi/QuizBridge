@@ -42,11 +42,7 @@ export function QuizletSyncSection() {
         <Tooltip>
           <TooltipTrigger asChild>
             <div>
-              <Button
-                className="bg-quizlet-primary hover:bg-quizlet-primaryHover disabled:opacity-50"
-                onClick={handleQuizletSync}
-                disabled={isDisabled}
-              >
+              <Button variant="quizlet" onClick={handleQuizletSync} disabled={isDisabled}>
                 Quizlet Sync
               </Button>
             </div>

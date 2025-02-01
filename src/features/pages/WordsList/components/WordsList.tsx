@@ -21,6 +21,7 @@ export function WordsList({ words }: WordsListProps) {
         <Card key={word.id} className="p-4">
           <div className="flex items-center gap-2">
             <Checkbox
+              className="h-5 w-5"
               checked={word.selected}
               onCheckedChange={() => dispatch(toggleWords([word.id]))}
             />

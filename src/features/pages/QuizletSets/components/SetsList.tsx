@@ -25,7 +25,11 @@ export function SetsList({ sets }: SetsListProps) {
       {sets.map((set) => (
         <Card key={set.id} className="p-4">
           <div className="flex items-center gap-2">
-            <Checkbox checked={set.selected} onCheckedChange={() => dispatch(toggleSet(set.id))} />
+            <Checkbox
+              className="h-5 w-5"
+              checked={set.selected}
+              onCheckedChange={() => dispatch(toggleSet(set.id))}
+            />
 
             {editingId === set.id ? (
               <EditSetForm

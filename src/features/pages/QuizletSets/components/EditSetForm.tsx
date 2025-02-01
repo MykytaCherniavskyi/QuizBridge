@@ -47,16 +47,16 @@ export function EditSetForm({ id, initialUrl, initialDescription, onCancel }: Ed
   return (
     <div className="flex-1 space-y-2">
       <Input
-        type="url"
-        value={url}
-        onChange={handleEditUrl}
-        className={cn('flex-1', !isUrlValid && 'border-red-500 focus-visible:ring-red-500')}
-      />
-      <Input
         type="text"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         className="flex-1"
+      />
+      <Input
+        type="url"
+        value={url}
+        onChange={handleEditUrl}
+        className={cn('flex-1', !isUrlValid && 'border-red-500 focus-visible:ring-red-500')}
       />
       <div className="flex justify-end gap-2">
         <TooltipProvider>
@@ -69,7 +69,7 @@ export function EditSetForm({ id, initialUrl, initialDescription, onCancel }: Ed
                 className={cn(!isUrlValid && 'cursor-not-allowed opacity-50 hover:bg-background')}
                 disabled={!isUrlValid}
               >
-                <Check className="h-4 w-4" />
+                <Check className="h-5 w-5" />
               </Button>
             </TooltipTrigger>
             <TooltipContent>
@@ -78,7 +78,7 @@ export function EditSetForm({ id, initialUrl, initialDescription, onCancel }: Ed
           </Tooltip>
         </TooltipProvider>
         <Button size="icon" variant="ghost" onClick={onCancel}>
-          <X className="h-4 w-4" />
+          <X className="h-5 w-5" />
         </Button>
       </div>
     </div>

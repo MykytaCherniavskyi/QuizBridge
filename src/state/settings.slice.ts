@@ -1,11 +1,12 @@
 import { storage } from '@/app/storage';
-import { SettingsState } from '@/types/settings.types';
+import { SettingsState, Theme } from '@/types/settings.types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: SettingsState = {
   isInitialized: false,
   hasInteractedWithEmptyWords: false,
   hasInteractedWithEmptySets: false,
+  theme: 'dark',
 };
 
 const settingsSlice = createSlice({
@@ -28,6 +29,14 @@ const settingsSlice = createSlice({
     initializeSettings: (state) => {
       state.isInitialized = true;
     },
+    setTheme: (state, action: PayloadAction<Theme>) => {
+      state.theme = action.payload;
+      storage.local.set({ settings: { ...state } });
+    },
+    toggleTheme: (state) => {
+      state.theme = state.theme === 'light' ? 'dark' : 'light';
+      storage.local.set({ settings: { ...state } });
+    },
   },
 });
 
@@ -35,6 +44,8 @@ export const {
   setSettings, 
   markEmptyWordsInteraction, 
   markEmptySetsInteraction, 
-  initializeSettings 
+  initializeSettings,
+  setTheme,
+  toggleTheme
 } = settingsSlice.actions;
 export default settingsSlice.reducer; 
