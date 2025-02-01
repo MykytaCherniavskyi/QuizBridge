@@ -24,7 +24,7 @@ export function WordsList({ words }: WordsListProps) {
               checked={word.selected}
               onCheckedChange={() => dispatch(toggleWords([word.id]))}
             />
-            <span className="flex-1 truncate">{word.text}</span>
+            <span className="flex-1 truncate text-sm">{word.text}</span>
             <Button size="icon" variant="ghost" onClick={() => navigate(`/words/${word.id}`)}>
               <Pencil className="h-4 w-4" />
             </Button>

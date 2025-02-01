@@ -3,7 +3,13 @@ import { QuizletSet } from '@/types/sets.types';
 import { Word } from '@/types/words.types';
 import { Middleware } from '@reduxjs/toolkit';
 import { initializeSets, setSelectedSet, setSets } from './sets.slice';
+import { initializeSettings, setSettings } from './settings.slice';
 import { initializeWords, setWords } from './words.slice';
+
+interface Settings {
+  hasInteractedWithEmptyWords: boolean;
+  hasInteractedWithEmptySets: boolean;
+}
 
 function convertToArray<T>(obj: unknown): T[] {
   if (Array.isArray(obj)) {
@@ -36,6 +42,15 @@ function isValidSet(item: unknown): item is QuizletSet {
   );
 }
 
+function isValidSettings(settings: unknown): settings is Settings {
+  return (
+    typeof settings === 'object' &&
+    settings !== null &&
+    typeof (settings as Settings).hasInteractedWithEmptyWords === 'boolean' &&
+    typeof (settings as Settings).hasInteractedWithEmptySets === 'boolean'
+  );
+}
+
 function isValidArray(data: unknown, isValidItem: (item: unknown) => boolean): data is (Word[] | QuizletSet[]) {
   const array = convertToArray<unknown>(data);
   return array.every(isValidItem);
@@ -43,7 +58,7 @@ function isValidArray(data: unknown, isValidItem: (item: unknown) => boolean): d
 
 export const chromeStorageMiddleware: Middleware = (store) => {
   // Load initial state from storage
-  storage.local.get(['words', 'sets', 'selectedSet']).then((result) => {
+  storage.local.get(['words', 'sets', 'selectedSet', 'settings']).then((result) => {
     // Handle words
     const wordsArray = convertToArray<Word>(result.words);
     if (wordsArray.length > 0 && isValidArray(wordsArray, isValidWord)) {
@@ -64,6 +79,14 @@ export const chromeStorageMiddleware: Middleware = (store) => {
     const selectedSet = result.selectedSet;
     if (selectedSet && isValidSet(selectedSet)) {
       store.dispatch(setSelectedSet(selectedSet));
+    }
+
+    // Handle settings
+    const settings = result.settings;
+    if (settings && isValidSettings(settings)) {
+      store.dispatch(setSettings(settings));
+    } else {
+      store.dispatch(initializeSettings());
     }
   });
 
@@ -86,6 +109,12 @@ export const chromeStorageMiddleware: Middleware = (store) => {
         const selectedSet = changes.selectedSet.newValue;
         if (selectedSet && isValidSet(selectedSet)) {
           store.dispatch(setSelectedSet(selectedSet));
+        }
+      }
+      if (changes.settings) {
+        const settings = changes.settings.newValue;
+        if (settings && isValidSettings(settings)) {
+          store.dispatch(setSettings(settings));
         }
       }
     });

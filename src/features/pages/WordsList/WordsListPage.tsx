@@ -1,4 +1,4 @@
-import { useAppSelector } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { Separator } from '@/components/ui/separator';
 import {
   selectWords,
@@ -11,22 +11,28 @@ import { ListActions } from './components/ListActions';
 import { WordsList } from './components/WordsList';
 import { MainSkeleton } from '@/features/components/MainSkeleton';
 import { WordsEmptyState } from './components/WordsEmptyState';
-import { useState } from 'react';
+import { selectHasInteractedWithEmptyWords } from '@/state/selectors/settings.selector';
+import { markEmptyWordsInteraction } from '@/state/settings.slice';
 
 export function WordsListPage() {
   const words = useAppSelector(selectWords);
   const isInitialized = useAppSelector(selectWordsInitialized);
   const selectedWords = useAppSelector(selectSelectedWords);
-  const [isAddingWord, setIsAddingWord] = useState(false);
+  const hasInteracted = useAppSelector(selectHasInteractedWithEmptyWords);
+  const dispatch = useAppDispatch();
 
   if (!isInitialized) {
     return <MainSkeleton type="list" itemCount={3} />;
   }
 
-  if (words.length === 0 && !isAddingWord) {
+  const handleAddWord = () => {
+    dispatch(markEmptyWordsInteraction());
+  };
+
+  if (words.length === 0 && !hasInteracted) {
     return (
       <div className="mx-auto max-w-md p-4">
-        <WordsEmptyState onAddWord={() => setIsAddingWord(true)} />
+        <WordsEmptyState onAddWord={handleAddWord} />
       </div>
     );
   }

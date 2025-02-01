@@ -1,4 +1,4 @@
-import { useAppSelector } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { Separator } from '@/components/ui/separator';
 import {
   selectSets,
@@ -10,22 +10,28 @@ import { ListActions } from './components/ListActions';
 import { SetsList } from './components/SetsList';
 import { MainSkeleton } from '@/features/components/MainSkeleton';
 import { SetsEmptyState } from './components/SetsEmptyState';
-import { useState } from 'react';
+import { selectHasInteractedWithEmptySets } from '@/state/selectors/settings.selector';
+import { markEmptySetsInteraction } from '@/state/settings.slice';
 
 export function QuizletSetsPage() {
   const sets = useAppSelector(selectSets);
   const isInitialized = useAppSelector(selectSetsInitialized);
   const selectedSets = useAppSelector(selectSelectedSets);
-  const [isAddingSet, setIsAddingSet] = useState(false);
+  const hasInteracted = useAppSelector(selectHasInteractedWithEmptySets);
+  const dispatch = useAppDispatch();
 
   if (!isInitialized) {
     return <MainSkeleton type="list" itemCount={3} />;
   }
 
-  if (sets.length === 0 && !isAddingSet) {
+  const handleAddSet = () => {
+    dispatch(markEmptySetsInteraction());
+  };
+
+  if (sets.length === 0 && !hasInteracted) {
     return (
       <div className="mx-auto max-w-md p-4">
-        <SetsEmptyState onAddSet={() => setIsAddingSet(true)} />
+        <SetsEmptyState onAddSet={handleAddSet} />
       </div>
     );
   }
