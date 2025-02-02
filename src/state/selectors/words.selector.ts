@@ -11,7 +11,7 @@ export const selectSelectedWords = createSelector(
 );
 
 export const selectWordById = createSelector(
-  [selectWords, (state: RootState, wordId: string) => wordId],
+  [selectWords, (_state: RootState, wordId: string) => wordId],
   (words, wordId) => words.find((word) => word.id === wordId)
 );
 

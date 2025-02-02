@@ -27,7 +27,6 @@ export interface CustomComboboxProps {
 
 export function CustomCombobox({
   options,
-  isLoading,
   onSelect,
   placeholder,
   selectedSet,

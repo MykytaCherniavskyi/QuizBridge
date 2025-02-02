@@ -2,7 +2,6 @@ import { ComponentType } from 'react';
 import { useAppSelector } from '@/app/hooks';
 import { QuizletSet } from '@/types/sets.types';
 import {
-  selectSets,
   selectSetsInitialized,
   selectSelectedSet,
   selectFormattedSets,

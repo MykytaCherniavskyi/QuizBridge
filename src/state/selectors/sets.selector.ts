@@ -18,7 +18,7 @@ export const selectFormattedSets = createSelector(
 );
 
 export const selectSetById = createSelector(
-  [selectSets, (state: RootState, setId: string) => setId],
+  [selectSets, (_state: RootState, setId: string) => setId],
   (sets, setId) => sets.find((set) => set.id === setId)
 );
 
