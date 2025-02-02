@@ -2,12 +2,23 @@ import { storage } from '@/app/storage';
 import { Word } from '@/types/words.types';
 
 // Create context menu item when extension is installed
-chrome.runtime.onInstalled.addListener(() => {
+chrome.runtime.onInstalled.addListener((details) => {
   chrome.contextMenus.create({
     id: 'saveWord',
-    title: 'Save "%s" to Words List',
+    title: 'Save "%s" to QuizBridge',
     contexts: ['selection']
   });
+
+  if (details.reason === 'install') {
+    // Enable the extension
+    chrome.action.enable();
+    
+    // Open welcome page
+    chrome.tabs.create({
+      url: chrome.runtime.getURL('welcome.html'),
+      active: true
+    });
+  }
 });
 
 // Handle context menu clicks

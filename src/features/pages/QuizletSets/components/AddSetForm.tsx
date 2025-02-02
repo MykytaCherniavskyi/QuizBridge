@@ -44,7 +44,7 @@ function AddSetFormComponent() {
         type="url"
         value={newUrl}
         onChange={handleAddNewUrl}
-        placeholder="Quizlet set URL..."
+        placeholder="https://quizlet.com/123456789/best-flashcard-set-ever"
         className={cn('flex-1', !isUrlValid && 'border-red-500 focus-visible:ring-red-500')}
       />
       <Input

@@ -3,7 +3,7 @@
   "name": "QuizBridge",
   "description": "Bridge your vocabulary lists to Quizlet flashcards seamlessly",
   "version": "1.0.0",
-  "permissions": ["storage", "activeTab", "contextMenus", "tabs", "unlimitedStorage"],
+  "permissions": ["storage", "activeTab", "contextMenus", "tabs", "unlimitedStorage", "scripting"],
   "host_permissions": ["http://*/*", "https://*/*"],
   "action": {
     "default_popup": "index.html",
@@ -32,6 +32,12 @@
     {
       "matches": ["https://quizlet.com/*/edit"],
       "js": ["src/content.ts"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["welcome.html"],
+      "matches": ["<all_urls>"]
     }
   ]
 }
