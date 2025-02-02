@@ -1,15 +1,11 @@
 import { storage } from '@/app/storage';
 import { QuizletSet } from '@/types/sets.types';
+import { Settings } from '@/types/settings.types';
 import { Word } from '@/types/words.types';
 import { Middleware } from '@reduxjs/toolkit';
 import { initializeSets, setSelectedSet, setSets } from './sets.slice';
 import { initializeSettings, setSettings } from './settings.slice';
 import { initializeWords, setWords } from './words.slice';
-
-interface Settings {
-  hasInteractedWithEmptyWords: boolean;
-  hasInteractedWithEmptySets: boolean;
-}
 
 function convertToArray<T>(obj: unknown): T[] {
   if (Array.isArray(obj)) {
@@ -46,7 +42,8 @@ function isValidSettings(settings: unknown): settings is Settings {
     typeof settings === 'object' &&
     settings !== null &&
     typeof (settings as Settings).hasInteractedWithEmptyWords === 'boolean' &&
-    typeof (settings as Settings).hasInteractedWithEmptySets === 'boolean'
+    typeof (settings as Settings).hasInteractedWithEmptySets === 'boolean' &&
+    typeof (settings as Settings).theme === 'string'
   );
 }
 
@@ -57,7 +54,7 @@ function isValidArray(data: unknown, isValidItem: (item: unknown) => boolean): d
 
 export const chromeStorageMiddleware: Middleware = (store) => {
   // Load initial state from storage
-  storage.local.get(['words', 'sets', 'selectedSet', 'selectedSetIds', 'settings']).then((result) => {
+  storage.local.get(['words', 'sets', 'selectedSet', 'settings']).then((result) => {
     // Handle words
     const wordsArray = convertToArray<Word>(result.words);
     if (wordsArray.length > 0 && isValidArray(wordsArray, isValidWord)) {
@@ -106,7 +103,7 @@ export const chromeStorageMiddleware: Middleware = (store) => {
       }
       if (changes.selectedSet) {
         const selectedSet = changes.selectedSet.newValue;
-        if (selectedSet && isValidSet(selectedSet)) {
+        if (selectedSet && isValidSet(selectedSet) || selectedSet === null) {
           store.dispatch(setSelectedSet(selectedSet));
         }
       }
