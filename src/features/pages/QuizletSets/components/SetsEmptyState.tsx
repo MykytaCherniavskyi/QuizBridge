@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { EmptyState } from '@/features/components/EmptyState';
 import { BookCopy } from 'lucide-react';
 
@@ -5,7 +6,7 @@ interface SetsEmptyStateProps {
   onAddSet?: () => void;
 }
 
-export function SetsEmptyState({ onAddSet }: SetsEmptyStateProps) {
+function SetsEmptyStateComponent({ onAddSet }: SetsEmptyStateProps) {
   return (
     <EmptyState
       icon={<BookCopy className="h-12 w-12" />}
@@ -22,3 +23,5 @@ export function SetsEmptyState({ onAddSet }: SetsEmptyStateProps) {
     />
   );
 }
+
+export const SetsEmptyState = memo(SetsEmptyStateComponent);

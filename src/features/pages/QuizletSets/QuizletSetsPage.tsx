@@ -12,13 +12,17 @@ import { MainSkeleton } from '@/features/components/MainSkeleton';
 import { SetsEmptyState } from './components/SetsEmptyState';
 import { selectHasInteractedWithEmptySets } from '@/state/selectors/settings.selector';
 import { markEmptySetsInteraction } from '@/state/settings.slice';
+import { memo } from 'react';
+
+const MemoizedSetsList = memo(SetsList);
+const MemoizedListActions = memo(ListActions);
 
 export function QuizletSetsPage() {
+  const dispatch = useAppDispatch();
   const sets = useAppSelector(selectSets);
   const isInitialized = useAppSelector(selectSetsInitialized);
   const selectedSets = useAppSelector(selectSelectedSets);
   const hasInteracted = useAppSelector(selectHasInteractedWithEmptySets);
-  const dispatch = useAppDispatch();
 
   if (!isInitialized) {
     return <MainSkeleton type="list" itemCount={3} />;
@@ -42,8 +46,8 @@ export function QuizletSetsPage() {
       {sets.length > 0 && (
         <>
           <Separator />
-          <ListActions sets={sets} selectedSets={selectedSets} />
-          <SetsList sets={sets} />
+          <MemoizedListActions selectedSets={selectedSets} />
+          <MemoizedSetsList sets={sets} />
         </>
       )}
     </div>

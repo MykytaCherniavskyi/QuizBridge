@@ -37,8 +37,7 @@ function isValidSet(item: unknown): item is QuizletSet {
     item !== null &&
     typeof (item as QuizletSet).id === 'string' &&
     typeof (item as QuizletSet).url === 'string' &&
-    typeof (item as QuizletSet).description === 'string' &&
-    typeof (item as QuizletSet).selected === 'boolean'
+    typeof (item as QuizletSet).description === 'string'
   );
 }
 
@@ -58,7 +57,7 @@ function isValidArray(data: unknown, isValidItem: (item: unknown) => boolean): d
 
 export const chromeStorageMiddleware: Middleware = (store) => {
   // Load initial state from storage
-  storage.local.get(['words', 'sets', 'selectedSet', 'settings']).then((result) => {
+  storage.local.get(['words', 'sets', 'selectedSet', 'selectedSetIds', 'settings']).then((result) => {
     // Handle words
     const wordsArray = convertToArray<Word>(result.words);
     if (wordsArray.length > 0 && isValidArray(wordsArray, isValidWord)) {

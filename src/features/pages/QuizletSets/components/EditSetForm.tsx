@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, memo } from 'react';
 import { useAppDispatch } from '@/app/hooks';
 import { editSet } from '@/state/sets.slice';
 import { Button } from '@/components/ui/button';
@@ -15,7 +15,7 @@ interface EditSetFormProps {
   onCancel: () => void;
 }
 
-export function EditSetForm({ id, initialUrl, initialDescription, onCancel }: EditSetFormProps) {
+function EditSetFormComponent({ id, initialUrl, initialDescription, onCancel }: EditSetFormProps) {
   const [url, setUrl] = useState(initialUrl);
   const [description, setDescription] = useState(initialDescription);
   const { isValid: isUrlValid, validateUrl } = useQuizletUrlValidation();
@@ -25,7 +25,7 @@ export function EditSetForm({ id, initialUrl, initialDescription, onCancel }: Ed
     validateUrl(initialUrl);
   }, [initialUrl, validateUrl]);
 
-  const handleEdit = () => {
+  const handleEdit = useCallback(() => {
     if (url.trim() && description.trim() && isUrlValid) {
       dispatch(
         editSet({
@@ -36,20 +36,27 @@ export function EditSetForm({ id, initialUrl, initialDescription, onCancel }: Ed
       );
       onCancel();
     }
-  };
+  }, [dispatch, url, description, isUrlValid, id, onCancel]);
 
-  const handleEditUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newUrl = e.target.value;
-    setUrl(newUrl);
-    validateUrl(newUrl);
-  };
+  const handleEditUrl = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newUrl = e.target.value;
+      setUrl(newUrl);
+      validateUrl(newUrl);
+    },
+    [validateUrl]
+  );
+
+  const handleDescriptionChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setDescription(e.target.value);
+  }, []);
 
   return (
     <div className="flex-1 space-y-2">
       <Input
         type="text"
         value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        onChange={handleDescriptionChange}
         className="flex-1"
       />
       <Input
@@ -84,3 +91,5 @@ export function EditSetForm({ id, initialUrl, initialDescription, onCancel }: Ed
     </div>
   );
 }
+
+export const EditSetForm = memo(EditSetFormComponent);

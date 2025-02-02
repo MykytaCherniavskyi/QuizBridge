@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { toggleSet, deleteSets } from '@/state/sets.slice';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -7,6 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Pencil, Trash2, Link as LinkIcon } from 'lucide-react';
 import { QuizletSet } from '@/types/sets.types';
 import { EditSetForm } from './EditSetForm';
+import { selectSelectedSetsMap } from '@/state/selectors/sets.selector';
 
 interface SetsListProps {
   sets: QuizletSet[];
@@ -15,6 +16,7 @@ interface SetsListProps {
 export function SetsList({ sets }: SetsListProps) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const dispatch = useAppDispatch();
+  const selectedSetsMap = useAppSelector(selectSelectedSetsMap);
 
   const handleOpenLink = (url: string) => {
     window.open(url, '_blank');
@@ -27,7 +29,7 @@ export function SetsList({ sets }: SetsListProps) {
           <div className="flex items-center gap-2">
             <Checkbox
               className="h-5 w-5"
-              checked={set.selected}
+              checked={selectedSetsMap[set.id] || false}
               onCheckedChange={() => dispatch(toggleSet(set.id))}
             />
 

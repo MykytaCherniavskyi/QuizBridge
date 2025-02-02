@@ -18,7 +18,7 @@ chrome.contextMenus.onClicked.addListener(async (info, _tab) => {
     const words = result.words as Word[] || [];
     
     // Create new word object
-    const newWord = {
+    const newWord: Word = {
       id: Date.now().toString(),
       text: info.selectionText.trim().slice(0, 250),
       definition: '',

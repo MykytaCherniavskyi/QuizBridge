@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, memo } from 'react';
 import { useAppDispatch } from '@/app/hooks';
 import { addSet } from '@/state/sets.slice';
 import { Button } from '@/components/ui/button';
@@ -7,26 +7,36 @@ import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useQuizletUrlValidation } from '../hooks/useQuizletUrlValidation';
 
-export function AddSetForm() {
+function AddSetFormComponent() {
   const [newUrl, setNewUrl] = useState('');
   const [newDescription, setNewDescription] = useState('');
   const { isValid: isUrlValid, validateUrl } = useQuizletUrlValidation();
   const dispatch = useAppDispatch();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newUrl.trim() && newDescription.trim() && isUrlValid) {
-      dispatch(addSet({ url: newUrl.trim(), description: newDescription.trim() }));
-      setNewUrl('');
-      setNewDescription('');
-    }
-  };
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      if (newUrl.trim() && newDescription.trim() && isUrlValid) {
+        dispatch(addSet({ url: newUrl.trim(), description: newDescription.trim() }));
+        setNewUrl('');
+        setNewDescription('');
+      }
+    },
+    [dispatch, newUrl, newDescription, isUrlValid]
+  );
 
-  const handleAddNewUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const url = e.target.value;
-    setNewUrl(url);
-    validateUrl(url);
-  };
+  const handleAddNewUrl = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const url = e.target.value;
+      setNewUrl(url);
+      validateUrl(url);
+    },
+    [validateUrl]
+  );
+
+  const handleDescriptionChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewDescription(e.target.value);
+  }, []);
 
   return (
     <form onSubmit={handleSubmit} className="mb-2 space-y-2">
@@ -40,7 +50,7 @@ export function AddSetForm() {
       <Input
         type="text"
         value={newDescription}
-        onChange={(e) => setNewDescription(e.target.value)}
+        onChange={handleDescriptionChange}
         placeholder="Description..."
         className="flex-1"
       />
@@ -66,3 +76,5 @@ export function AddSetForm() {
     </form>
   );
 }
+
+export const AddSetForm = memo(AddSetFormComponent);

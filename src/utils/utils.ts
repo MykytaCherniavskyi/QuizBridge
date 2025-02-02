@@ -9,3 +9,6 @@ export function extractQuizletSetId(url: string): string | null {
   }
   return null;
 }
+
+// Function to wait for a specified time
+export const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));

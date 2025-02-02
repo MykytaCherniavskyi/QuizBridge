@@ -1,15 +1,6 @@
 import { storage } from "@/app/storage";
 import { Word } from "@/types/words.types";
-
-console.log('Content script loaded');
-
-// Initialize content script
-function init() {
-  console.log('Content script initialized');
-}
-
-// Function to wait for a specified time
-const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+import { wait } from "@/utils/utils";
 
 function getLastRowElements(): { termSide: HTMLDivElement; definitionSide: HTMLDivElement } | null {
   const activeRow = document.querySelectorAll('div[contenteditable="true"][role="textbox"]');
@@ -65,7 +56,6 @@ async function findAndClickAddRowButton() {
 
 // Main function to handle sync
 async function handleQuizletSync(words: Array<{ text: string; definition: string, id: string }>, syncedWords: Array<{ text: string; definition: string, id: string }>) {
-  console.log('Starting sync with words:', words);
   const lastRowElements = getLastRowElements();
   
   if (!lastRowElements) {
@@ -104,7 +94,6 @@ chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
       // .then((wordToStore) => storage.local.set({ words: wordToStore }))
       .catch(error => {
         console.error('Sync failed:', error);
-        sendResponse({ success: false, error: error.message });
       });
 
     // Send initial response to keep the message channel open
@@ -112,5 +101,3 @@ chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
     return true;
   }
 });
-
-init(); 
