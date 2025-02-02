@@ -1,6 +1,9 @@
 import { storage } from '@/app/storage';
 import { Word } from '@/types/words.types';
 
+// Set up feedback form URL for when extension is uninstalled
+chrome.runtime.setUninstallURL(import.meta.env.VITE_UNINSTALL_FEEDBACK_URL);
+
 // Create context menu item when extension is installed
 chrome.runtime.onInstalled.addListener((details) => {
   chrome.contextMenus.create({
