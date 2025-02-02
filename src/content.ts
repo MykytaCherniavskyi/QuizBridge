@@ -90,8 +90,10 @@ chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
 
     handleQuizletSync(message.words, syncedWords)
       .then(() => storage.local.get(['words']))
-      .then(({ words }) => (words as Word[]).filter((word: { id: string }) => !syncedWords.some((syncedWord) => syncedWord.id === word.id)))
-      // .then((wordToStore) => storage.local.set({ words: wordToStore }))
+      .then(({ words }) => {
+        const wordToStore = (words as Word[]).filter((word: { id: string }) => !syncedWords.some((syncedWord) => syncedWord.id === word.id));
+        return storage.local.set({ words: wordToStore });
+      })
       .catch(error => {
         console.error('Sync failed:', error);
       });
