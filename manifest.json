@@ -4,7 +4,7 @@
   "description": "Bridge your vocabulary lists to Quizlet flashcards seamlessly",
   "version": "1.0.0",
   "permissions": ["storage", "activeTab", "contextMenus", "tabs", "unlimitedStorage", "scripting"],
-  "host_permissions": ["http://*/*", "https://*/*"],
+  "host_permissions": ["https://quizlet.com/*"],
   "action": {
     "default_popup": "index.html",
     "default_icon": {
