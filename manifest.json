@@ -3,7 +3,7 @@
   "name": "QuizBridge",
   "description": "Bridge your vocabulary lists to Quizlet flashcards seamlessly",
   "version": "1.0.0",
-  "permissions": ["storage", "activeTab", "contextMenus", "tabs", "unlimitedStorage", "scripting"],
+  "permissions": ["storage", "activeTab", "contextMenus", "tabs", "unlimitedStorage"],
   "host_permissions": ["https://quizlet.com/*"],
   "action": {
     "default_popup": "index.html",
