@@ -33,9 +33,10 @@ async function fillTermRow(word: { text: string; definition: string }) {
     // Using contentEditable to set content
     termSide.focus();
     termSide.textContent = word.text;
-
+    await wait(100);
     definitionSide.focus();
     definitionSide.textContent = word.definition;
+    await wait(400);
     return true;
   }
   console.log('Failed to find term or definition elements');

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "QuizBridge",
   "description": "Bridge your vocabulary lists to Quizlet flashcards seamlessly",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "permissions": ["storage", "activeTab", "contextMenus", "tabs", "unlimitedStorage"],
   "host_permissions": ["https://quizlet.com/*"],
   "action": {
